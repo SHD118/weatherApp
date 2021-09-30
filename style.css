@@ -1,0 +1,15 @@
+#search_area{
+    float: left
+    
+}
+
+#jumbotron_head{
+    background-color: beige;
+    text-align: center;
+}
+
+#result_area{
+border: 10px solid black;
+height: 300px
+
+}

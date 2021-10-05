@@ -2,14 +2,49 @@ var inputText = document.getElementById("inputCity")
 var button = document.getElementById("button-addon2");
 var fiveDay = document.getElementById("5day")
 var weatherDetail = document.getElementById("weather_detail")
+var resultList = document.getElementById("resultList")
 var finalValue = [];
+let savedCities = []
 button.addEventListener("click", function () {
+   
     var inputGlobal = inputText.value;
     dataInput(inputGlobal);
     dataInput2(inputGlobal);
-    // console.log(inputGlobal)
+    
+	let city = document.querySelector('#inputCity').value
+	// console.log(city);
+
+	// 1 you need to pass city to the funciton that gets city and places it on screen
+
+	// 2 put the newly search city into local storage with other searched citys
+	
+
+	if(localStorage.getItem('savedCities')){
+		let savedCities = JSON.parse(localStorage.getItem('savedCities')) 
+	} 
+
+
+
+
+
+	// let savedCities = localStorage.getItem('savedCities') ? JSON.parse(localStorage.getItem('savedCities')) : []
+	
+	
+    savedCities.push(city)
+    createItemFromStorage(JSON.stringify(savedCities))
+	
+	localStorage.setItem('savedCities', JSON.stringify(savedCities))
 
 })
+
+function createItemFromStorage(value) {
+
+    var leadTemp = document.createElement("p")
+    leadTemp.textContent = value;
+    resultList.appendChild(leadTemp)
+
+    
+}
 
 function dataInput(input) {
     const myKey = "8d16f28b545852d623de7ad3baf04f51";
@@ -106,28 +141,3 @@ function dataInput2(input) {
 
 }
 
-document.querySelector('#button-addon2').addEventListener('submit', function(e){
-	e.preventDefault()
-	let city = document.querySelector('#inputCity').value
-	// console.log(city);
-	document.querySelector('#search').reset()
-	// 1 you need to pass city to the funciton that gets city and places it on screen
-
-	// 2 put the newly search city into local storage with other searched citys
-	let savedCities = []
-
-	if(localStorage.getItem('savedCities')){
-		let savedCities = JSON.parse(localStorage.getItem('savedCities')) 
-	} 
-
-
-
-
-
-	// let savedCities = localStorage.getItem('savedCities') ? JSON.parse(localStorage.getItem('savedCities')) : []
-	
-	
-	savedCities.push(city)
-	
-	localStorage.setItem('savedCities', JSON.stringify(savedCities))
-})

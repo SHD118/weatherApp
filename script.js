@@ -3,8 +3,18 @@ var button = document.getElementById("button-addon2");
 var fiveDay = document.getElementById("5day")
 var weatherDetail = document.getElementById("weather_detail")
 var resultList = document.getElementById("resultList")
+var buttonPress = document.getElementsByClassName("btn-secondary");
 var finalValue = [];
-let savedCities = []
+
+let savedCities = localStorage.getItem('savedCities') ? JSON.parse(localStorage.getItem('savedCities')) : []
+
+
+
+
+for (let i = 0; i < savedCities.length; i++) {
+    createItemFromStorage(savedCities[i])
+}
+
 button.addEventListener("click", function () {
    
     var inputGlobal = inputText.value;
@@ -18,28 +28,37 @@ button.addEventListener("click", function () {
 
 	// 2 put the newly search city into local storage with other searched citys
 	
-
 	if(localStorage.getItem('savedCities')){
-		let savedCities = JSON.parse(localStorage.getItem('savedCities')) 
+		 savedCities = JSON.parse(localStorage.getItem('savedCities')) 
 	} 
 
+    let flag = false;
+    for (let i = 0; i < savedCities.length; i++){
+        if (savedCities[i] === city) {
+            alert("This city " + city + " already listed")
+            flag = true;
+            break;
+     
+        }
+        
+    }
+    if (flag === false) {
+        savedCities.push(city)
+        // localStorage.setItem('savedCities', JSON.stringify(savedCities))
+        localStorage.setItem('savedCities', JSON.stringify(savedCities))
+        createItemFromStorage(city)
+    }
 
-
-
-
-	// let savedCities = localStorage.getItem('savedCities') ? JSON.parse(localStorage.getItem('savedCities')) : []
 	
 	
-    savedCities.push(city)
-    createItemFromStorage(JSON.stringify(savedCities))
-	
-	localStorage.setItem('savedCities', JSON.stringify(savedCities))
 
 })
 
+
 function createItemFromStorage(value) {
 
-    var leadTemp = document.createElement("p")
+    var leadTemp = document.createElement("button")
+    leadTemp.classList.add("btn-secondary")
     leadTemp.textContent = value;
     resultList.appendChild(leadTemp)
 
@@ -65,6 +84,7 @@ function dataInput(input) {
         })
         .then(function (data) {
             let weatherArray = []
+            fiveDay.textContent = "";
             for (let i = 0; i < data.list.length; i++) {
                 // console.log(data.list[i].main.temp_min)
                
@@ -87,6 +107,7 @@ function dataInput(input) {
                 </div>
                </div>
                </div>`)
+                
                
  creatElemtn.appendTo(fiveDay)
 
@@ -117,7 +138,9 @@ function dataInput2(input) {
             return data;
 
         })
+        
         .then(function (data) {
+            weatherDetail.textContent = "";
             // for (let i = 0; i < data.length; i++){
                 var pTagName = document.createElement("h1")
                 var pTagTemp = document.createElement("p")
@@ -141,3 +164,7 @@ function dataInput2(input) {
 
 }
 
+buttonPress.addEventListener("click", function () {
+    let tempValue = e.target.value
+    console.log(tempValue)
+})

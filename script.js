@@ -42,7 +42,7 @@ function dataInput(input) {
                 let tempString = `http://openweathermap.org/img/wn/${icon}.png`
                 var wind = data.list[i].wind.speed;
                 let creatElemtn = $(`<div class="col-2">
-                <div class="card" style="width: 18rem;">
+                <div class="card" style=" background-color: blue">
                 <div class="card-body">
                     <h5 class="card-title">${dt}</h5>
                     <h6 class="card-subtitle mb-2 text-muted">${temp}</h6>
@@ -106,4 +106,28 @@ function dataInput2(input) {
 
 }
 
+document.querySelector('#button-addon2').addEventListener('submit', function(e){
+	e.preventDefault()
+	let city = document.querySelector('#inputCity').value
+	// console.log(city);
+	document.querySelector('#search').reset()
+	// 1 you need to pass city to the funciton that gets city and places it on screen
 
+	// 2 put the newly search city into local storage with other searched citys
+	let savedCities = []
+
+	if(localStorage.getItem('savedCities')){
+		let savedCities = JSON.parse(localStorage.getItem('savedCities')) 
+	} 
+
+
+
+
+
+	// let savedCities = localStorage.getItem('savedCities') ? JSON.parse(localStorage.getItem('savedCities')) : []
+	
+	
+	savedCities.push(city)
+	
+	localStorage.setItem('savedCities', JSON.stringify(savedCities))
+})
